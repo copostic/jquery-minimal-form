@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Minimal Form Interface</title>
+    <meta name="description" content="Minimal Form Interface: Simplistic, single input view form"/>
+    <meta name="keywords" content="form, minimal, interface, single input, big form, responsive form, transition"/>
+    <meta name="author" content="Codrops"/>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="css/component.css"/>
+    <script src="js/modernizr.custom.js"></script>
+</head>
+<body>
+<div class="container">
+    <section>
+        <form id="contact-form" class="simform">
+            <div class="simform-inner">
+                <ol class="questions">
+                    <li>
+                        <span><label for="first-name">What's your first name?</label></span>
+                        <input id="first-name" name="first-name" type="text" autocomplete="given-name"/>
+                    </li>
+                    <li>
+                        <span><label for="last-name">What's your last name?</label></span>
+                        <input id="last-name" name="last-name" type="text" autocomplete="family-name"/>
+                    </li>
+                    <li>
+                        <span><label for="email">What's your email?</label></span>
+                        <input id="email" name="email" type="email" autocomplete="email"/>
+                    </li>
+                    <li>
+                        <span><label for="phone">Can I have your phone number?</label></span>
+                        <input id="phone" name="phone" type="tel" autocomplete="tel"/>
+                    </li>
+                    <li>
+                        <span><label for="message">What are you contacting me for?</label></span>
+                        <textarea id="message" name="message"></textarea>
+                    </li>
+                </ol><!-- /questions -->
+                <button class="submit" type="submit">Send answers</button>
+                <div class="controls">
+                    <button class="next"></button>
+                    <div class="progress"></div>
+                    <span class="number">
+								<span class="number-current"></span>
+								<span class="number-total"></span>
+							</span>
+                    <span class="error-message"></span>
+                </div>
+            </div>
+            <span class="final-message"></span>
+        </form>
+    </section>
+</div>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="js/stepsForm.js"></script>
+<script>
+    var $form = $('#contact-form');
+
+    new StepsForm($form, {
+        onSubmit: function (form) {
+            // hide form
+            $form.find('.simform-inner').addClass('hide');
+
+            /*
+            form.submit()
+            or
+            AJAX request (maybe show loading indicator while we don't have an answer..)
+            */
+
+            // let's just simulate something...
+            var $messageEl = $('.final-message');
+            $messageEl.html('Thank you! We\'ll be in touch.');
+            $messageEl.addClass('show');
+        }
+    });
+</script>
+</body>
+</html>
