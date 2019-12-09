@@ -1,5 +1,6 @@
 /**
  * StepsForm.jquery.js v1.0.0
+ * https://github.com/copostic/jquery-minimal-form
  * 
  * Based on StesForm.js
  * http://www.codrops.com
