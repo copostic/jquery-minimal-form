@@ -2,7 +2,7 @@
   font-size: 2.5em;
   margin: 0 auto;
   max-width: 860px;
-  padding: 2em 0;
+  padding: 6em 0 2em;
   position: relative;
   text-align: left;
   width: 100%;
@@ -26,6 +26,9 @@
   left: 0;
   position: absolute;
   width: 100%;
+}
+.simform ol.textarea:before {
+  height: 7.5em;
 }
 .simform button:focus {
   outline: none;
@@ -53,6 +56,11 @@
   position: absolute;
   right: 0;
   width: 3em;
+}
+@media screen and (max-width: 33.5625em) {
+  .simform .number {
+    font-size: 0.7em;
+  }
 }
 .simform .number:after {
   -webkit-transform: translateX(-50%);
@@ -86,6 +94,11 @@
   visibility: hidden;
   width: 100%;
 }
+@media screen and (max-width: 33.5625em) {
+  .simform .error-message {
+    font-size: 0.7em;
+  }
+}
 .simform .final-message {
   -webkit-transition: opacity 0.4s;
   opacity: 0;
@@ -93,7 +106,7 @@
   transition: opacity 0.4s;
   visibility: hidden;
 }
-.questions li {
+ol.questions li {
   -webkit-transition: visibility 0s 0.4s, height 0s 0.4s;
   height: 0;
   position: relative;
@@ -101,34 +114,23 @@
   visibility: hidden;
   z-index: 100;
 }
-.questions li.current {
-  -webkit-transition: none;
-  height: auto;
-  transition: none;
-  visibility: visible;
-}
-.questions li > span {
+ol.questions li > span {
   display: block;
   overflow: hidden;
 }
-.questions li > span label {
+ol.questions li > span label {
   -webkit-transform: translateY(-100%);
   -webkit-transition: -webkit-transform 0.4s;
   display: block;
   transform: translateY(-100%);
   transition: transform 0.4s;
 }
-.questions li.current > span label {
-  -webkit-transform: translateY(0);
-  -webkit-transition: none;
-  transform: translateY(0);
-  transition: none;
-}
-.questions input {
+ol.questions li input,
+ol.questions li textarea {
   -webkit-transition: opacity 0.3s;
   background: transparent;
   border: none;
-  color: rgba(0, 0, 0, 0.8);
+  color: white;
   display: block;
   font-size: 1em;
   line-height: 1;
@@ -138,10 +140,29 @@
   transition: opacity 0.3s;
   width: calc(100% - 2em);
 }
-.questions input:focus {
+ol.questions li input:focus,
+ol.questions li textarea:focus {
   outline: none;
 }
-.questions .current input {
+ol.questions li textarea {
+  height: 7.5em;
+  font-size: 0.8em;
+  margin-top: 2em;
+}
+ol.questions li.current {
+  -webkit-transition: none;
+  height: auto;
+  transition: none;
+  visibility: visible;
+}
+ol.questions li.current > span label {
+  -webkit-transform: translateY(0);
+  -webkit-transition: none;
+  transform: translateY(0);
+  transition: none;
+}
+ol.questions li.current input,
+ol.questions li.current textarea {
   opacity: 1;
 }
 .no-js .questions li {
@@ -290,6 +311,7 @@ input[type=text]::-ms-clear {
 @media screen and (max-width: 33.5625em) {
   .simform {
     font-size: 1.2em;
+    width: 90%;
   }
 }
 /*# sourceMappingURL=component.css.map */
