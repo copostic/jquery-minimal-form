@@ -9,7 +9,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  *
  * Copyright 2019, CPostic
- * http://www.postic.tk
+ * http://www.corentin-postic.fr
  */
 ;(function (window) {
 
@@ -107,7 +107,9 @@
             // enter
             if (keyCode === 13) {
                 e.preventDefault();
-                self._nextQuestion();
+                if(self.$el.find('li.current').find('textarea').length === 0) {
+                    self._nextQuestion();
+                }
             }
         });
 
@@ -130,6 +132,7 @@
         if (this.current === this.questionsCount - 1) {
             this.isFilled = true;
         }
+
 
         // clear any previous error messages
         this._clearError();
@@ -155,6 +158,9 @@
             this.$nextQuestion = this.$questions.eq(this.current);
             $currentQuestion.removeClass('current');
             this.$nextQuestion.addClass('current');
+
+            //modify the background
+            this.$el.find('ol.questions').toggleClass('textarea', this.$nextQuestion.find('textarea').length !== 0);
         }
 
         // after animation ends, remove class "show-next" from form element and change current question placeholder
@@ -202,30 +208,60 @@
         this.options.onSubmit(this.$el.get(0));
     };
 
-    // TODO (next version..)
     // the validation function
     StepsForm.prototype._validate = function () {
         // current question´s input
-        let value = this.$questions.eq(this.current).find('input, textarea').val();
-        if (value === '') {
-            this._showError('EMPTYSTR');
+        let $elem = this.$questions.eq(this.current).find('input, textarea'),
+            value = $elem.val(),
+            type = $elem.attr('type'),
+            emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            telRegex = /^(0[1-68])(?:[ _.-]?(\d{2})){4}$/,
+            condition, error;
+
+        if(value === '') {
+            this._showError('EMPTY_STR');
             return false;
         }
 
-        return true;
+
+        switch (type) {
+            case 'text':
+                condition = value !== '';
+                error = 'EMPTY_STR';
+                break;
+            case 'email':
+                condition = emailRegex.test(value);
+                error = 'INVALID_EMAIL';
+                break;
+            case 'tel':
+                condition = telRegex.test(value);
+                error =  'INVALID_TEL';
+                break;
+            default:
+                condition = value !== '';
+                error = 'EMPTY_STR';
+                break;
+        }
+
+        if(!condition) {
+            this._showError(error);
+        }
+
+        return condition;
     };
 
-    // TODO (next version..)
     StepsForm.prototype._showError = function (err) {
         let message = '';
         switch (err) {
-            case 'EMPTYSTR' :
+            case 'EMPTY_STR' :
                 message = 'Please fill the field before continuing';
                 break;
-            case 'INVALIDEMAIL' :
+            case 'INVALID_EMAIL' :
                 message = 'Please fill a valid email address';
                 break;
-            // ...
+            case 'INVALID_TEL' :
+                message = 'Please fill a valid phone number';
+                break;
         }
         this.$error.html(message).addClass('show');
     };
