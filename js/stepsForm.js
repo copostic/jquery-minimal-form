@@ -106,7 +106,6 @@
             let keyCode = e.keyCode || e.which;
             // enter
             if (keyCode === 13) {
-                e.preventDefault();
                 if(self.$el.find('li.current').find('textarea').length === 0) {
                     self._nextQuestion();
                 }
@@ -121,6 +120,10 @@
                 e.preventDefault();
             }
         });
+
+        this.$el.on('submit', function (e) {
+            e.preventDefault();
+        })
     };
 
     StepsForm.prototype._nextQuestion = function () {
